@@ -1,0 +1,90 @@
+{% load static %}
+{% comment %} <!DOCTYPE html> {% endcomment %}
+{% comment %} <html lang="vi"> {% endcomment %}
+{% comment %} <head> {% endcomment %}
+    {% comment %} <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header mẫu</title> {% endcomment %}
+    <!-- Link Font Awesome cho icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Link file CSS riêng -->
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+{% comment %} </head> {% endcomment %}
+{% comment %} <body> {% endcomment %}
+    <header class="header">
+        <div class="header__container">
+            <!-- Logo -->
+            <div class="header__logo">
+                <a href="/">
+                    <img src="https://via.placeholder.com/120x40?text=Logo" alt="Logo" class="logo-img">
+                </a>
+            </div>
+
+            <!-- Thanh tìm kiếm -->
+            <div class="header__search">
+                <form action="/search" method="get" class="search-form">
+                    <input type="text" name="q" placeholder="Tìm kiếm sản phẩm..." class="search-input">
+                    <button type="submit" class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Biểu tượng tài khoản / Đăng nhập -->
+            <div class="header__account">
+               {% if user.is_authenticated %}
+                    {% comment %} <a href="#" class="account-link">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="account-text">{{ user.username }}</span>
+                    </a> {% endcomment %}
+
+                    <div class="account-dropdown">
+                        <a href="#" class="account-link">
+                            <i class="fas fa-user-circle"></i>
+                            <span class="account-text">{{ user.username }}</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="{% url 'auth_user:logout' %}" class="dropdown-item">Đăng xuất</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{% url 'auth_user:login' %}" class="account-link">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="account-text">Đăng nhập</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    {% comment %} <!-- Thêm nội dung giả để thấy rõ header -->
+    <main style="padding: 20px; background: #f5f5f5; min-height: 100vh;">
+        <h1>Nội dung trang web</h1>
+        <p>Cuộn để xem header cố định (nếu muốn).</p>
+    </main> {% endcomment %}
+
+    <script>
+        // Đợi DOM load
+document.addEventListener('DOMContentLoaded', function() {
+    const accountLink = document.getElementById('accountLink');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    if (accountLink && dropdownMenu) {
+        accountLink.addEventListener('click', function(event) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ a (nếu href="#")
+            dropdownMenu.classList.toggle('show');
+        });
+
+        // Optional: Click bên ngoài để đóng dropdown
+        document.addEventListener('click', function(event) {
+            const isClickInside = accountLink.contains(event.target) || dropdownMenu.contains(event.target);
+            if (!isClickInside && dropdownMenu.classList.contains('show')) {
+                dropdownMenu.classList.remove('show');
+            }
+        });
+    }
+});
+    </script>
+{% comment %} </body> {% endcomment %}
+
+{% comment %} </html> {% endcomment %}

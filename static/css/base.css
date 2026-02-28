@@ -1,0 +1,34 @@
+/* Reset cơ bản */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* Layout chính dùng flexbox */
+.main-content-flex {
+    display: flex;
+    align-items: stretch;    /* Các cột cao bằng nhau */
+    min-height: 100%;         /* Tuỳ chỉnh theo nhu cầu */
+}
+
+/* Sidebar chiếm 20% khi mở, 70px khi thu gọn */
+.main-content-flex > .sidebar {
+    flex-shrink: 0;
+    transition: flex-basis 0.3s ease;
+}
+
+.main-content-flex > .sidebar:not(.collapsed) {
+    flex-basis: 20%;          /* Tỉ lệ 2:8 */
+}
+
+.main-content-flex > .sidebar.collapsed {
+    flex-basis: 70px;         /* Chiều rộng khi thu gọn */
+}
+
+/* Khu vực nội dung chính chiếm phần còn lại */
+.main-content-flex > .content-area {
+    flex: 1 1 auto;           /* Tự động co dãn */
+    min-width: 0;             /* Tránh tràn nội dung */
+}

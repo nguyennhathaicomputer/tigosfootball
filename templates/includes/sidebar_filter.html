@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Filter</title>
+    <link rel="stylesheet" href="{% static 'css/sidebar_filter.css' %}">
+</head>
+<body>
+    <div class="container" style="display: flex; gap: 20px; padding: 20px;">
+        <!-- Sidebar filter -->
+        <aside class="sidebar-filter">
+            <h2 class="sidebar-filter__title">Bộ lọc sản phẩm</h2>
+            
+            <!-- Nhóm Giá -->
+            <div class="filter-group">
+                <h3 class="filter-group__title">Giá</h3>
+                <div class="filter-group__options">
+                    <label class="filter-option">
+                        <input type="checkbox" class="filter-option__checkbox">
+                        <span class="filter-option__label">Dưới 100.000đ</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" class="filter-option__checkbox">
+                        <span class="filter-option__label">100.000đ - 200.000đ</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" class="filter-option__checkbox">
+                        <span class="filter-option__label">200.000đ - 500.000đ</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" class="filter-option__checkbox">
+                        <span class="filter-option__label">Trên 500.000đ</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Nhóm Size -->
+            <div class="filter-group">
+                <h3 class="filter-group__title">Size</h3>
+                <div class="filter-group__options">
+                    <label class="filter-option">
+                        <input type="checkbox" class="filter-option__checkbox">
+                        <span class="filter-option__label">36</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" class="filter-option__checkbox">
+                        <span class="filter-option__label">37</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" class="filter-option__checkbox">
+                        <span class="filter-option__label">38</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" class="filter-option__checkbox">
+                        <span class="filter-option__label">39</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" class="filter-option__checkbox">
+                        <span class="filter-option__label">40</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" class="filter-option__checkbox">
+                        <span class="filter-option__label">41</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" class="filter-option__checkbox">
+                        <span class="filter-option__label">42</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Nhóm Hãng giày -->
+            <div class="filter-group">
+                <h3 class="filter-group__title">Hãng giày</h3>
+                <div class="filter-group__options">
+                    <label class="filter-option">
+                        <input type="checkbox" class="filter-option__checkbox">
+                        <span class="filter-option__label">Nike</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" class="filter-option__checkbox">
+                        <span class="filter-option__label">Adidas</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" class="filter-option__checkbox">
+                        <span class="filter-option__label">Puma</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" class="filter-option__checkbox">
+                        <span class="filter-option__label">Converse</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" class="filter-option__checkbox">
+                        <span class="filter-option__label">Vans</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" class="filter-option__checkbox">
+                        <span class="filter-option__label">Bitis</span>
+                    </label>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Khu vực nội dung chính (demo) -->
+        {% comment %} <main class="main-content" style="flex: 1; background: #f5f5f5; padding: 20px;">
+            <h2>Danh sách sản phẩm</h2>
+            <p>Nội dung sản phẩm ở đây.</p>
+        </main> {% endcomment %}
+    </div>
+</body>
+</html>

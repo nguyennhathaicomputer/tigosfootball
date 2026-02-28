@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <!-- Font Awesome cho icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- CSS riêng -->
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <!-- Logo người dùng (icon lớn) -->
+            <div class="login-logo">
+                <i class="fas fa-user-circle"></i>
+            </div>
+
+            <!-- Form đăng nhập -->
+            <form class="register-form" id="registerForm">
+                 {% csrf_token %}
+                <!-- Trường username -->
+                <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-user"></i></span>
+                    <input type="text" id = "username" class="input-field" placeholder="Tên đăng nhập" required>
+                </div>
+
+                <!-- Trường password -->
+                <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-lock"></i></span>
+                    <input type="password" id="password" class="input-field" placeholder="Mật khẩu" required>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-lock"></i></span>
+                    <input type="password" id="password2" class="input-field" placeholder="Xác nhận mật khẩu" required>
+                </div>
+                <!-- Nút đăng nhập -->
+                <button type="submit" class="login-btn">Tạo Tài Khoản</button>
+            </form>
+
+            <!-- Có thể thêm link phụ nếu cần (không bắt buộc) -->
+            <!-- <div class="login-links">
+                <a href="#">Quên mật khẩu?</a>
+                <a href="#">Đăng ký</a>
+            </div> -->
+        </div>
+    </div>
+    <script> 
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Ngăn form gửi đi
+            
+
+            const username = document.getElementById('username').value;
+             const password = document.getElementById('password').value;
+            const password2 = document.getElementById('password2').value;
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            if (password !== password2) {
+                alert('Mật khẩu và xác nhận mật khẩu không khớp!');
+                return; // Dừng việc gửi form nếu mật khẩu không khớp
+            }
+
+            const data = {
+                username: username,
+                password: password,
+                password2: password2,
+            }
+
+            console.log(data);
+
+            fetch("{% url 'auth_user:register' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response =>response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Đăng ký thành công!');
+                    window.location.href = "{% url 'auth_user:login' %}";
+                } else {
+                    alert('Đăng ký thất bại: ' + data.message);
+                }
+            })
+
+            // Nếu mật khẩu khớp, bạn có thể tiếp tục gửi form
+            
+        });
+
+    </script>
+</body>
+</html>

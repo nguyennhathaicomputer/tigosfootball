@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Link CSS riêng cho trang này -->
+<link rel="stylesheet" href="{% static 'css/CreateProduct.css' %}">
+
+<div class="create-product">
+    <!-- Cột trái: Upload ảnh -->
+    <div class="left-col">
+        <div class="upload-area" id="uploadArea">
+            <input type="file" id="fileInput" multiple accept="image/*">
+            <label for="fileInput" class="upload-label">
+                <i class="fas fa-cloud-upload-alt"></i> Kéo thả hoặc click để tải ảnh lên
+            </label>
+        </div>
+        <div class="thumbnails" id="thumbnails"></div>
+    </div>
+
+    <!-- Cột phải: Form nhập liệu -->
+    <div class="right-col">
+    <form class="product-form">
+        <div class="form-group">
+            <label for="brand">Hãng giày</label>
+            <input type="text" id="brand" name="brand" placeholder="Nhập hãng giày">
+        </div>
+        <div class="form-group">
+            <label for="sole">Kiểu đế</label>
+            <input type="text" id="sole" name="sole" placeholder="Nhập kiểu đế">
+        </div>
+        <div class="form-group">
+            <label for="color">Màu sắc</label>
+            <input type="text" id="color" name="color" placeholder="Nhập màu sắc">
+        </div>
+        
+        <!-- Phần size và số lượng động -->
+        <div class="form-group">
+            <label>Size và Số lượng</label>
+            <div id="size-quantity-container">
+                <!-- Cặp đầu tiên -->
+                <div class="size-quantity-pair">
+                    <input type="text" name="size[]" placeholder="Size" class="size-input">
+                    <input type="number" name="quantity[]" placeholder="Số lượng" class="quantity-input">
+                    <button type="button" class="remove-pair" style="display: none;">&times;</button>
+                    <!-- Ẩn nút xóa của cặp đầu tiên nếu chỉ có một, nhưng nên hiển thị khi có nhiều hơn 1 -->
+                </div>
+            </div>
+            <button type="button" id="add-pair" class="btn-add-pair">+ Thêm size</button>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Giá bán</label>
+            <input type="number" id="price" name="price" placeholder="Nhập giá bán">
+        </div>
+        <button type="submit" class="btn-add">Thêm</button>
+    </form>
+</div>
+</div>
+
+<!-- JavaScript hiển thị thumbnail với nút xóa -->
+<script>
+   // --- Phần upload ảnh (giữ nguyên) ---
+    let selectedFiles = [];
+    const fileInput = document.getElementById('fileInput');
+    const thumbnails = document.getElementById('thumbnails');
+
+    fileInput.addEventListener('change', function(e) {
+        const files = Array.from(e.target.files);
+        files.forEach(file => {
+            if (file.type.startsWith('image/')) {
+                selectedFiles.push(file);
+
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    const wrapper = document.createElement('div');
+                    wrapper.classList.add('thumbnail-wrapper');
+
+                    const img = document.createElement('img');
+                    img.src = ev.target.result;
+                    img.classList.add('thumbnail');
+                    
+                    const deleteBtn = document.createElement('span');
+                    deleteBtn.classList.add('delete-icon');
+                    deleteBtn.innerHTML = '&times;';
+                    
+                    deleteBtn.addEventListener('click', function() {
+                        selectedFiles = selectedFiles.filter(f => f !== file);
+                        wrapper.remove();
+                    });
+
+                    wrapper.appendChild(img);
+                    wrapper.appendChild(deleteBtn);
+                    thumbnails.appendChild(wrapper);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        fileInput.value = '';
+    });
+
+    // Hàm chuyển file ảnh sang Base64 (không dùng nhưng giữ lại)
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+
+    // --- Phần quản lý cặp size–số lượng ---
+    const container = document.getElementById('size-quantity-container');
+    const addPairBtn = document.getElementById('add-pair');
+
+    // Hàm tạo một cặp input size + số lượng kèm nút xóa
+    function createPair() {
+        const pairDiv = document.createElement('div');
+        pairDiv.className = 'size-quantity-pair';
+
+        const sizeInput = document.createElement('input');
+        sizeInput.type = 'text';
+        sizeInput.name = 'size[]';
+        sizeInput.placeholder = 'Size (VD: 39, 40, 41)';
+        sizeInput.className = 'size-input';
+
+        const quantityInput = document.createElement('input');
+        quantityInput.type = 'number';
+        quantityInput.name = 'quantity[]';
+        quantityInput.placeholder = 'Số lượng';
+        quantityInput.className = 'quantity-input';
+        quantityInput.min = 1;
+
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'remove-pair';
+        removeBtn.innerHTML = '&times;';
+        removeBtn.addEventListener('click', function() {
+            pairDiv.remove();
+        });
+
+        pairDiv.appendChild(sizeInput);
+        pairDiv.appendChild(quantityInput);
+        pairDiv.appendChild(removeBtn);
+        return pairDiv;
+    }
+
+    // Khởi tạo một cặp mặc định khi trang load
+    document.addEventListener('DOMContentLoaded', function() {
+        container.appendChild(createPair());
+    });
+
+    // Thêm cặp mới khi click nút "+"
+    addPairBtn.addEventListener('click', function() {
+        container.appendChild(createPair());
+    });
+
+    // --- Xử lý submit form ---
+    const submitBtn = document.querySelector('.btn-add');
+    submitBtn.addEventListener('click', async function(e) {
+        e.preventDefault();
+
+        // Thu thập dữ liệu từ các trường cố định
+        const formData = new FormData();
+        formData.append('brand', document.getElementById('brand').value);
+        formData.append('sole', document.getElementById('sole').value);
+        formData.append('color', document.getElementById('color').value);
+        formData.append('price', document.getElementById('price').value);
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+        // Thu thập dữ liệu từ các cặp size–số lượng (chỉ lấy cặp có cả hai ô không trống)
+        const sizeInputs = document.querySelectorAll('input[name="size[]"]');
+        const quantityInputs = document.querySelectorAll('input[name="quantity[]"]');
+        
+        const sizes = {};
+        for (let i = 0; i < sizeInputs.length; i++) {
+            const sizeVal = sizeInputs[i].value.trim();
+            const quantityVal = quantityInputs[i].value.trim();
+            if (sizeVal !== '' && quantityVal !== '') {
+                sizes[sizeVal] = quantityVal; // dùng size làm key, quantity là value
+            }
+        }
+        // Thêm vào formData dưới dạng JSON string
+        formData.append('sizes', JSON.stringify(sizes));
+        // Thêm các file ảnh
+        selectedFiles.forEach((file) => {
+            formData.append('images', file);
+        });
+
+        // Gửi request
+        try {
+            const response = await fetch("{% url 'admin_user:create_product' %}", {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            if (data.status === 'ok') {
+                alert('Thêm sản phẩm thành công!');
+                window.location.reload();
+            } else {
+                alert('Có lỗi: ' + data.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Đã xảy ra lỗi khi gửi dữ liệu.');
+        }
+    });
+</script>
+{% endblock %}

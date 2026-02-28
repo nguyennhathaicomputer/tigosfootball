@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <!-- Font Awesome cho icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- CSS riêng -->
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <!-- Logo người dùng (icon lớn) -->
+            <div class="login-logo">
+                <i class="fas fa-user-circle"></i>
+            </div>
+
+            <!-- Form đăng nhập -->
+            <form class="login-form">
+                 {% csrf_token %}
+                <!-- Trường username -->
+                <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-user"></i></span>
+                    <input type="text" class="input-field" placeholder="Tên đăng nhập" required>
+                </div>
+
+                <!-- Trường password -->
+                <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-lock"></i></span>
+                    <input type="password" class="input-field" placeholder="Mật khẩu" required>
+                </div>
+
+                <!-- Nút đăng nhập -->
+                <button type="submit" class="login-btn">Đăng nhập</button>
+            </form>
+
+            <!-- Có thể thêm link phụ nếu cần (không bắt buộc) -->
+            <!-- <div class="login-links">
+                <a href="#">Quên mật khẩu?</a>
+                <a href="#">Đăng ký</a>
+            </div> -->
+        </div>
+    </div>
+    <script>
+        document.querySelector('.login-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Ngăn form gửi đi
+            
+            const username = this.querySelector('input[type="text"]').value;
+            const password = this.querySelector('input[type="password"]').value;
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            const data = {
+                username:username,
+                password: password
+            }
+
+            fetch("{% url 'auth_user:login' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Đăng nhập thành công, chuyển hướng hoặc hiển thị thông báo
+                    window.location.href = "{% url 'admin_user:dashboard' %}"; 
+                    alert('Đăng nhập thành công!');
+                    console.log(data.success);
+                } else {
+                    // Đăng nhập thất bại, hiển thị lỗi
+                    console.log(data.success);
+                    console.log(data.error);
+                    alert('Đăng nhập thất bại: ' + data.error);
+                }
+            })
+        });
+    </script>
+</body>
+</html>

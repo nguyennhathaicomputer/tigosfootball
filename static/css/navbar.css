@@ -1,0 +1,155 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Navbar chính */
+.navbar {
+    background-color: #333;
+    color: #fff;
+    position: sticky;
+    top: 0; /* Dính dưới header, nếu header cũng sticky thì cần điều chỉnh */
+    z-index: 999;
+}
+
+.navbar__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+/* Nút hamburger (ẩn trên desktop) */
+.navbar__toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #fff;
+    padding: 10px 0;
+}
+
+/* Menu chính */
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    display: block;
+    padding: 15px 20px;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+}
+
+.nav-link:hover {
+    background-color: #444;
+}
+
+/* Dropdown */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #444;
+    min-width: 200px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: none; /* Ẩn mặc định */
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 10px 15px;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #555;
+}
+
+/* Hiện dropdown khi hover trên desktop */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Icon mũi tên cho dropdown */
+.dropdown-toggle i {
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+/* Responsive: mobile */
+@media (max-width: 768px) {
+    .navbar__container {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 15px;
+    }
+
+    .navbar__toggle {
+        display: block; /* Hiện nút hamburger */
+        align-self: flex-end; /* Đẩy sang phải */
+        margin: 10px 0;
+    }
+
+    .nav-menu {
+        display: none; /* Ẩn menu mặc định */
+        flex-direction: column;
+        width: 100%;
+        background-color: #333;
+        padding: 10px 0;
+    }
+
+    .nav-menu.active {
+        display: flex; /* Hiện khi có class active */
+    }
+
+    .nav-item {
+        width: 100%;
+    }
+
+    .nav-link {
+        padding: 12px 15px;
+        white-space: normal; /* Cho phép xuống dòng */
+    }
+
+    /* Dropdown trên mobile */
+    .dropdown-menu {
+        position: static; /* Bỏ absolute */
+        display: none; /* Ẩn mặc định */
+        background-color: #555;
+        box-shadow: none;
+        padding-left: 15px; /* Thụt vào */
+    }
+
+    .dropdown.active .dropdown-menu {
+        display: block; /* Hiện khi dropdown active */
+    }
+
+    /* Icon mũi tên xoay khi mở */
+    .dropdown.active .dropdown-toggle i {
+        transform: rotate(180deg);
+    }
+}

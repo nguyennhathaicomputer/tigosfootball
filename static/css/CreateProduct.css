@@ -1,0 +1,210 @@
+/* CreateProduct.css (giữ nguyên các style cũ và thêm phần mới) */
+
+/* Bố cục chung */
+.create-product {
+    display: flex;
+    gap: 30px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.left-col,
+.right-col {
+    flex: 1;
+}
+
+/* Khu vực upload */
+.upload-area {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 40px 20px;
+    text-align: center;
+    background: #fff;
+    transition: border-color 0.3s;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.upload-area:hover {
+    border-color: #007bff;
+}
+
+.upload-area input[type="file"] {
+    display: none;
+}
+
+.upload-label {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    color: #555;
+}
+
+.upload-label i {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+/* Thumbnails container */
+.thumbnails {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Wrapper cho mỗi thumbnail */
+.thumbnail-wrapper {
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+/* Ảnh thumbnail */
+.thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    padding: 2px;
+    background: #fff;
+}
+
+/* Nút xóa */
+.delete-icon {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff4444;
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.delete-icon:hover {
+    opacity: 1;
+    background: #cc0000;
+}
+
+/* Form nhập liệu (giữ nguyên) */
+.product-form {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* Nút thêm */
+.btn-add {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+}
+.size-quantity-pair {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.size-quantity-pair input {
+    flex: 1;                /* Cả hai input chiếm không gian đều nhau */
+    min-width: 0;           /* Tránh tràn layout trên mobile */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước */
+}
+
+/* Nút xóa cố định chiều rộng nhỏ */
+.remove-pair {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    color: #ff4444;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 5px;
+    transition: color 0.2s;
+}
+
+.remove-pair:hover {
+    color: #cc0000;
+}
+
+/* Nút thêm size */
+.btn-add-pair {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 5px;
+    transition: background-color 0.2s;
+}
+
+.btn-add-pair:hover {
+    background-color: #218838;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .create-product {
+        flex-direction: column;
+    }
+}
+
