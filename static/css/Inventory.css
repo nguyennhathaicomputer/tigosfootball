@@ -1,0 +1,247 @@
+/* Inventory.css */
+
+.inventory-page {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Nút toggle sidebar */
+.sidebar-toggle {
+    display: none; /* Ẩn trên desktop, hiện trên mobile */
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    /* Xóa bo góc */
+    border-radius: 0;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 15px;
+    align-items: center;
+    gap: 8px;
+}
+
+.sidebar-toggle i {
+    font-size: 18px;
+}
+
+/* Container chính (sidebar + main) */
+.inventory-container {
+    display: flex;
+    gap: 30px;
+    position: relative;
+}
+
+/* Sidebar */
+.inventory-sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    background: #f8f9fa;
+    /* Xóa bo góc */
+    border-radius: 0;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, width 0.3s ease;
+    align-self: flex-start;
+}
+
+/* Sidebar ẩn */
+.inventory-sidebar.hidden {
+    display: none;
+}
+
+.sidebar-header h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 8px;
+}
+
+/* Form tìm kiếm */
+.search-form {
+    display: block;
+    width: 100%;
+}
+
+/* Mỗi nhóm trường (label + input) nằm trên một hàng riêng */
+.search-form .form-group {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.search-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #555;
+    font-size: 14px;
+}
+
+.search-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    /* Xóa bo góc */
+    border-radius: 0;
+    font-size: 14px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.search-form input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+}
+
+/* Nút tìm kiếm nằm riêng một hàng */
+.btn-search {
+    width: 100%;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    /* Xóa bo góc */
+    border-radius: 0;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+    display: block;
+    margin-top: 5px;
+}
+
+.btn-search:hover {
+    background: #0056b3;
+}
+
+/* Main content */
+.inventory-main {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Danh sách sản phẩm */
+.product-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Card sản phẩm dạng ngang */
+.product-card {
+    display: flex;
+    background: #fff;
+    /* Xóa bo góc */
+    border-radius: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 100%;
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Ảnh sản phẩm */
+.product-image {
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+    background: #f0f0f0;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Thông tin sản phẩm */
+.product-info {
+    flex: 1;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.product-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    color: #666;
+    font-size: 14px;
+}
+
+.product-details span {
+    background: #f5f5f5;
+    padding: 4px 10px;
+    /* Xóa bo góc */
+    border-radius: 0;
+}
+
+.product-price {
+    font-weight: 600;
+    color: #28a745;
+}
+
+.no-products {
+    text-align: center;
+    color: #999;
+    padding: 40px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar-toggle {
+        display: inline-flex;
+    }
+
+    .inventory-container {
+        flex-direction: column;
+    }
+
+    .inventory-sidebar {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .inventory-sidebar.hidden {
+        display: none;
+    }
+
+    .product-card {
+        flex-direction: column;
+    }
+
+    .product-image {
+        width: 100%;
+        height: 160px;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-details {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .product-name {
+        font-size: 16px;
+    }
+}

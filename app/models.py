@@ -10,9 +10,12 @@ class Brand(models.Model):
         return self.name
     
 class SoleType(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    brand = models.ForeignKey(Brand, on_delete=models.PROTECT, related_name='sole_types', null=True)
+    name = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    class Meta:
+        unique_together = ('name', 'brand')
 
     def __str__(self):
         return self.name
@@ -41,7 +44,7 @@ class Shoe(models.Model):
     
 class ShoeSize(models.Model):
     shoe = models.ForeignKey(Shoe, on_delete=models.CASCADE, related_name='sizes')
-    size = models.DecimalField(max_digits=4, decimal_places=1)
+    size = models.CharField(max_length=10)
     stock = models.PositiveIntegerField(default=0)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -58,12 +61,14 @@ class ShoeSize(models.Model):
 class ShoeImage(models.Model):
     shoe = models.ForeignKey(Shoe, on_delete=models.CASCADE, related_name='images')
     # Lưu URL từ Firebase
-    image_url = models.URLField(max_length=500) 
+    image_url = models.ImageField(upload_to='shoes/') 
     # Tên file trên Firebase để dễ quản lý/xóa sau này
-    firebase_path = models.CharField(max_length=255, blank=True)
+    # firebase_path = models.CharField(max_length=255, blank=True)
     
-    is_primary = models.BooleanField(default=False) # Ảnh đại diện chính
+    # is_primary = models.BooleanField(default=False) # Ảnh đại diện chính
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
 
     def __str__(self):
         return f"Image for {self.shoe.name}"
+
