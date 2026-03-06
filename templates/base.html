@@ -28,6 +28,11 @@
            {% endif %}
            <div class="content-area">
                {% block content %}
+                {% if not user.is_authenticated %}
+
+                {% else %}
+                    {% include 'admin/admin.html' %}
+                {% endif %}
                <!-- Nội dung chính của từng trang sẽ được chèn vào đây -->
                {% endblock %}
            </div>

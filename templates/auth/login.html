@@ -69,7 +69,7 @@
             .then(data => {
                 if (data.success) {
                     // Đăng nhập thành công, chuyển hướng hoặc hiển thị thông báo
-                    window.location.href = "{% url 'admin_user:dashboard' %}"; 
+                    window.location.href = "{% url 'app:home' %}"; 
                     alert('Đăng nhập thành công!');
                     console.log(data.success);
                 } else {
