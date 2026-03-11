@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             // Gửi dữ liệu lên server (PUT hoặc POST)
-            const response = await fetch('/api/update-product/', {
+            const response = await fetch('/admin_user/api/update-product/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

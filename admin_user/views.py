@@ -128,7 +128,7 @@ def update_product(request):
             shoe.price = new_price
             shoe.save()
             for size_data in sizes_data:
-                size_obj = Size.objects.get(shoe=shoe, size=size_data['size'])
+                size_obj = ShoeSize.objects.get(shoe=shoe, size=size_data['size'])
                 size_obj.stock = size_data['stock']
                 size_obj.save()
             return JsonResponse({'status': 'ok'})
