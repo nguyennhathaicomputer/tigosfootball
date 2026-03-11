@@ -2,3 +2,4 @@
 .env
 **/__pycache__/
 /tigosfootball-firebase-adminsdk-fbsvc-6ca1256947.json
+/db.sqlite3

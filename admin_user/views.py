@@ -87,6 +87,7 @@ def inventory(request):
             first_image = shoe.images.first()
             image_url = first_image.image_url.url if first_image else "media/default-shoe.jpg"
             products.append({
+                'product_id': shoe.id,
                 'name': shoe.name,
                 'total_quantity':shoe.total_quantity or 0,
                 'color': shoe.color.name,
@@ -99,3 +100,38 @@ def inventory(request):
         
         return render(request, 'admin/Inventory.html', {'products': products})
     
+def get_product_detail(request, pk):
+    try:
+        shoe = Shoe.objects.prefetch_related('sizes').get(pk=pk)
+        sizes = shoe.sizes.all().values('size', 'stock')
+        data = {
+            'product_id': shoe.id,
+            'name': shoe.name,
+            'price': float(shoe.price),
+            'image_url': shoe.images.first().image_url.url if shoe.images.first() else "media/default-shoe.jpg",
+            'sizes': list(sizes)
+        }
+        return JsonResponse(data)
+    except Shoe.DoesNotExist:
+        return JsonResponse({'error': 'Not found'}, status=404)
+
+@csrf_exempt
+def update_product(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        product_id = data['product_id']
+        new_price = data['price']
+        sizes_data = data['sizes']
+        # Cập nhật giá và số lượng
+        try:
+            shoe = Shoe.objects.get(pk=product_id)
+            shoe.price = new_price
+            shoe.save()
+            for size_data in sizes_data:
+                size_obj = Size.objects.get(shoe=shoe, size=size_data['size'])
+                size_obj.stock = size_data['stock']
+                size_obj.save()
+            return JsonResponse({'status': 'ok'})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    return JsonResponse({'error': 'Method not allowed'}, status=405)
