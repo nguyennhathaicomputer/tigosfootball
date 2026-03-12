@@ -1,34 +1,407 @@
 /* Reset cơ bản */
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} */
+
+
+/* .main-content-flex {
+    display: flex;
+    gap: 20px;
+} */
+
+/* .sidebar {
+    width: 280px;
+    flex-shrink: 0;
+}
+
+.content-area {
+    flex: 1;
+    min-width: 0;
+} */
+
+/* Layout chính dùng flexbox */
+/* .main-content-flex {
+    display: flex;
+    align-items: stretch;    /* Các cột cao bằng nhau */
+    /* min-height: 100%;         Tuỳ chỉnh theo nhu cầu */
+/* } */ 
+
+/* Sidebar chiếm 20% khi mở, 70px khi thu gọn */
+/* .main-content-flex > .sidebar {
+    flex-shrink: 0;
+    transition: flex-basis 0.3s ease;
+} */
+
+/* .main-content-flex > .sidebar:not(.collapsed) {
+    flex-basis: 20%;          /* Tỉ lệ 2:8 */
+/* } */ 
+
+/* .main-content-flex > .sidebar.collapsed {
+    flex-basis: 70px;         /* Chiều rộng khi thu gọn */
+/* } */ 
+
+/* Khu vực nội dung chính chiếm phần còn lại */
+/* .main-content-flex > .content-area {
+    flex: 1 1 auto;           /* Tự động co dãn */
+    /* min-width: 0;             Tránh tràn nội dung */
+/* } */ 
+
+
+
+
+/* xu ly card */
+
+
+/* CSS cho product grid */
+/* .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+} */
+
+/* .product-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #eee;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: inherit;
+} */
+
+/* .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+} */
+/* 
+.card-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #f5f5f5;
+} */
+
+/* .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+} */
+
+/* .card-info {
+    padding: 12px;
+    text-align: left;
+} */
+
+/* .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+} */
+
+/* .card-color {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 4px;
+} */
+
+/* .card-price {
+    font-size: 16px;
+    font-weight: 600;
+    color: #007bff;
+} */
+
+/* Responsive */
+/* @media (max-width: 1024px) {
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+} */
+/* 
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+} */
+
+/* @media (max-width: 480px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+} */
+
+/* .no-products {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: #999;
+} */
+
+
+/* ===== RESET & CƠ BẢN ===== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    color: #333;
+}
 
-/* Layout chính dùng flexbox */
+/* ===== LAYOUT CHÍNH ===== */
+.layout-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Flex container cho sidebar và content */
 .main-content-flex {
     display: flex;
-    align-items: stretch;    /* Các cột cao bằng nhau */
-    min-height: 100%;         /* Tuỳ chỉnh theo nhu cầu */
+    gap: 30px;
+    align-items: flex-start; /* Không kéo căng các cột */
+    flex-wrap: wrap; /* Cho phép xuống dòng khi cần */
 }
 
-/* Sidebar chiếm 20% khi mở, 70px khi thu gọn */
-.main-content-flex > .sidebar {
-    flex-shrink: 0;
-    transition: flex-basis 0.3s ease;
+/* Sidebar filter */
+.sidebar {
+    flex: 0 0 280px; /* Không co, không giãn, chiều rộng 280px */
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    align-self: flex-start; /* Giữ nguyên vị trí trên cùng */
 }
 
-.main-content-flex > .sidebar:not(.collapsed) {
-    flex-basis: 20%;          /* Tỉ lệ 2:8 */
+/* Content chính */
+.content-area {
+    flex: 1 1 0; /* Chiếm phần còn lại, tối thiểu 0 */
+    min-width: 0; /* Tránh tràn nội dung */
 }
 
-.main-content-flex > .sidebar.collapsed {
-    flex-basis: 70px;         /* Chiều rộng khi thu gọn */
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .main-content-flex {
+        flex-direction: column; /* Xếp dọc trên mobile */
+        gap: 20px;
+    }
+
+    .sidebar {
+        flex-basis: auto; /* Bỏ chiều rộng cố định */
+        width: 100%; /* Chiếm toàn bộ chiều ngang */
+    }
 }
 
-/* Khu vực nội dung chính chiếm phần còn lại */
-.main-content-flex > .content-area {
-    flex: 1 1 auto;           /* Tự động co dãn */
-    min-width: 0;             /* Tránh tràn nội dung */
+/* ===== PRODUCT GRID & CARD (giữ nguyên từ code cũ) ===== */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #eee;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: inherit;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.card-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #f5f5f5;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-info {
+    padding: 12px;
+    text-align: left;
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-color {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.card-price {
+    font-size: 16px;
+    font-weight: 600;
+    color: #007bff;
+}
+
+/* Responsive cho product grid */
+@media (max-width: 1024px) {
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.no-products {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: #999;
+}
+
+/* ===== CÁC STYLE BỔ SUNG CHO SIDEBAR FILTER (nếu cần) ===== */
+/* Các class này có thể đã có trong sidebar_filter.css, nhưng nếu muốn đồng bộ thì thêm */
+.sidebar h2,
+.sidebar h3 {
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.filter-group {
+    margin-bottom: 25px;
+}
+
+.filter-group__title {
+    font-size: 16px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    color: #555;
+}
+
+.filter-group__options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.filter-option__checkbox {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+
+
+/* ===== RESPONSIVE CHO SIDEBAR ===== */
+@media (max-width: 768px) {
+    /* Thay đổi layout thành relative để định vị nút */
+    .main-content-flex {
+        position: relative;
+    }
+
+    /* Sidebar ẩn mặc định trên mobile */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -300px; /* Ẩn bên trái màn hình */
+        width: 280px;
+        height: 100vh;
+        z-index: 1000;
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        overflow-y: auto;
+    }
+
+    /* Khi có class sidebar-visible, sidebar hiện ra */
+    .sidebar.sidebar-visible {
+        left: 0;
+    }
+
+    /* Nút toggle sidebar */
+    .sidebar-toggle-btn {
+        position: fixed;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 0 8px 8px 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        z-index: 1001;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        transition: left 0.3s ease;
+    }
+
+    /* Khi sidebar hiện, nút dịch sang phải theo sidebar */
+    .sidebar.sidebar-visible + .sidebar-toggle-btn {
+        left: 280px;
+    }
+
+    /* Overlay tối khi sidebar mở (tùy chọn) */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+
+    /* Điều chỉnh content-area để không bị che */
+    .content-area {
+        width: 100%;
+    }
 }

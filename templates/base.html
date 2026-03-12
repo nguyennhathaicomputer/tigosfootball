@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Tigos Football</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
    {% include 'includes/header.html' %}
@@ -24,11 +25,20 @@
            {% if not user.is_authenticated %}
                <aside class="sidebar sidebar-filter">
                    {% include 'includes/sidebar_filter.html' %}
+                   <!-- Nút toggle sidebar cho mobile -->
                </aside> 
+               <button class="sidebar-toggle-btn" id="sidebarToggle">
+                   <i class="fas fa-chevron-right"></i>
+               </button>
+               <!-- Overlay khi sidebar mở -->
+               <div class="sidebar-overlay" id="sidebarOverlay"></div>
            {% endif %}
            <div class="content-area">
                {% block content %}
                 {% if not user.is_authenticated %}
+                <div class="product-grid" id="productGrid">
+                    {% include 'includes/product_card.html' %}
+                </div>
 
                 {% else %}
                     {% include 'admin/admin.html' %}
@@ -39,6 +49,7 @@
        </main>
    </div>
 
-    {% comment %} <script src="{% static 'js/main.js' %}"></script> {% endcomment %}
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/filter.js' %}"></script>
 </body>
 </html>

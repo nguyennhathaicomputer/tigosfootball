@@ -1,4 +1,4 @@
-{% load static %}
+{% comment %} {% load static %}
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -108,6 +108,58 @@
             <h2>Danh sách sản phẩm</h2>
             <p>Nội dung sản phẩm ở đây.</p>
         </main> {% endcomment %}
-    </div>
+    {% comment %} </div>
 </body>
-</html>
+</html> {% endcomment %} 
+
+
+<!-- Ví dụ cho phần brand -->
+<div class="filter-group filter-brand">
+    <h3 class="filter-group__title">Hãng giày</h3>
+    <div class="filter-group__options">
+        {% for brand in brands %}
+        <label class="filter-option">
+            <input type="checkbox" class="filter-option__checkbox" value="{{ brand.name }}">
+            <span class="filter-option__label">{{ brand.name }}</span>
+        </label>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Phần size -->
+<div class="filter-group filter-size">
+    <h3 class="filter-group__title">Size</h3>
+    <div class="filter-group__options">
+        {% for size in sizes %}
+        <label class="filter-option">
+            <input type="checkbox" class="filter-option__checkbox" value="{{ size }}">
+            <span class="filter-option__label">{{ size }}</span>
+        </label>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Phần giá vẫn giữ tĩnh nhưng thêm class filter-price -->
+<div class="filter-group filter-price">
+    <h3 class="filter-group__title">Giá</h3>
+    <div class="filter-group__options">
+        <label class="filter-option">
+            <input type="checkbox" class="filter-option__checkbox" value="under100">
+            <span class="filter-option__label">Dưới 100.000đ</span>
+        </label>
+         <label class="filter-option">
+            <input type="checkbox" class="filter-option__checkbox" value="100-200">
+            <span class="filter-option__label">100.000đ - 200.000đ</span>
+        </label>
+         <label class="filter-option">
+            <input type="checkbox" class="filter-option__checkbox" value="200-500">
+            <span class="filter-option__label">2000.000đ - 500.000đ</span>
+        </label>
+         <label class="filter-option">
+            <input type="checkbox" class="filter-option__checkbox" value="under100">
+            <span class="filter-option__label">trên 500.000đ</span>
+        </label>
+        
+        <!-- ... các khoảng khác ... -->
+    </div>
+</div>
