@@ -445,3 +445,45 @@
         max-width: 100%;
     }
 }
+
+
+
+.size-group {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.size-title {
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+}
+.sole-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 15px;
+    padding: 5px 0;
+}
+.sole-name {
+    min-width: 80px;
+}
+.size-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.size-controls button {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+}
+.size-quantity {
+    width: 60px;
+    text-align: center;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

@@ -10,12 +10,10 @@ class Brand(models.Model):
         return self.name
     
 class SoleType(models.Model):
-    brand = models.ForeignKey(Brand, on_delete=models.PROTECT, related_name='sole_types', null=True)
     name = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    class Meta:
-        unique_together = ('name', 'brand')
+    
 
     def __str__(self):
         return self.name
@@ -31,7 +29,7 @@ class Color(models.Model):
 class Shoe(models.Model):
     name = models.CharField(max_length=100)
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, related_name='shoes')
-    sole_type = models.ForeignKey(SoleType, on_delete=models.PROTECT, related_name='shoes')
+    # sole_type = models.ForeignKey(SoleType, on_delete=models.PROTECT, related_name='shoes')
     color = models.ForeignKey(Color, on_delete=models.PROTECT, related_name='shoes')
     price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField(blank=True)
@@ -42,19 +40,36 @@ class Shoe(models.Model):
     def __str__(self):
         return self.name
     
-class ShoeSize(models.Model):
-    shoe = models.ForeignKey(Shoe, on_delete=models.CASCADE, related_name='sizes')
-    size = models.CharField(max_length=10)
-    stock = models.PositiveIntegerField(default=0)
+# class ShoeSize(models.Model):
+#     shoe = models.ForeignKey(Shoe, on_delete=models.CASCADE, related_name='sizes')
+#     size = models.CharField(max_length=10)
+#     stock = models.PositiveIntegerField(default=0)
 
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     class Meta:
+#         unique_together = ('shoe', 'size')
+
+#     def __str__(self):
+#         return f"{self.shoe.name} - Size {self.size}"
+
+class Size(models.Model):
+    name =models.CharField(max_length=10)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+class ShoeVariant(models.Model):
+    shoe = models.ForeignKey(Shoe, on_delete = models.CASCADE, related_name='variants')
+    size = models.ForeignKey(Size, on_delete=models.CASCADE, related_name='variants')
+    soleType = models.ForeignKey(SoleType, on_delete=models.PROTECT, related_name='shoe_variants')
+    stock = models.PositiveIntegerField(default=0)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
     class Meta:
-        unique_together = ('shoe', 'size')
-
-    def __str__(self):
-        return f"{self.shoe.name} - Size {self.size}"
+        unique_together = ('shoe', 'size', 'soleType')
     
 
 

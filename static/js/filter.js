@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Lấy tất cả các checkbox filter
-    const brandCheckboxes = document.querySelectorAll('.filter-brand input[type="checkbox"]');
+    const brandCheckboxes = document.querySelectorAll('.filter-sole input[type="checkbox"]');
     const sizeCheckboxes = document.querySelectorAll('.filter-size input[type="checkbox"]');
     const priceCheckboxes = document.querySelectorAll('.filter-price input[type="checkbox"]');
     const productGrid = document.getElementById('productGrid');
@@ -26,14 +26,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Hàm kiểm tra một sản phẩm có thỏa mãn filter không
     function matchesFilter(card) {
-        const brand = card.dataset.brand;
+        const brand = card.dataset.sole.split(',');
         const price = parseFloat(card.dataset.price);
         const sizes = card.dataset.sizes.split(','); // mảng các size dạng string
 
         // Lọc brand
         const selectedBrands = getCheckedValues(brandCheckboxes);
-        if (selectedBrands.length > 0 && !selectedBrands.includes(brand)) {
-            return false;
+        if (selectedBrands.length > 0) {
+            const hasSole = brand.some(s => selectedBrands.includes(s));
+            if (!hasSole) return false;
         }
 
         // Lọc size: sản phẩm có ít nhất một size nằm trong danh sách size được chọn
@@ -75,4 +76,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Nếu có nút "Xóa filter", có thể thêm hàm reset
     // (không bắt buộc)
+});
+
+document.querySelectorAll('.product-card').forEach(card => {
+    card.addEventListener('click', function(e) {
+        // Tránh click vào các phần tử bên trong card (nếu có nút)
+        const productId = this.dataset.productId;
+        if (productId) {
+            window.location.href = `product/${productId}/`; // Điều chỉnh URL cho phù hợp
+        }
+    });
 });

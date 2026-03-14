@@ -114,13 +114,13 @@
 
 
 <!-- Ví dụ cho phần brand -->
-<div class="filter-group filter-brand">
-    <h3 class="filter-group__title">Hãng giày</h3>
+<div class="filter-group filter-sole">
+    <h3 class="filter-group__title">Loại Đế</h3>
     <div class="filter-group__options">
-        {% for brand in brands %}
+        {% for sole in soleTypes %}
         <label class="filter-option">
-            <input type="checkbox" class="filter-option__checkbox" value="{{ brand.name }}">
-            <span class="filter-option__label">{{ brand.name }}</span>
+            <input type="checkbox" class="filter-option__checkbox" value="{{ sole.name }}">
+            <span class="filter-option__label">{{ sole.name }}</span>
         </label>
         {% endfor %}
     </div>
@@ -132,8 +132,8 @@
     <div class="filter-group__options">
         {% for size in sizes %}
         <label class="filter-option">
-            <input type="checkbox" class="filter-option__checkbox" value="{{ size }}">
-            <span class="filter-option__label">{{ size }}</span>
+            <input type="checkbox" class="filter-option__checkbox" value="{{ size.name }}">
+            <span class="filter-option__label">{{ size.name }}</span>
         </label>
         {% endfor %}
     </div>
@@ -153,10 +153,10 @@
         </label>
          <label class="filter-option">
             <input type="checkbox" class="filter-option__checkbox" value="200-500">
-            <span class="filter-option__label">2000.000đ - 500.000đ</span>
+            <span class="filter-option__label">200.000đ - 500.000đ</span>
         </label>
          <label class="filter-option">
-            <input type="checkbox" class="filter-option__checkbox" value="under100">
+            <input type="checkbox" class="filter-option__checkbox" value="above500">
             <span class="filter-option__label">trên 500.000đ</span>
         </label>
         

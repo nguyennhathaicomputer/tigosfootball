@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'app',
     'auth_user',
-    'admin_user',
+    'admin_user','django.contrib.humanize'
     
 ]
 
@@ -154,3 +154,9 @@ STATICFILES_DIRS = [
 
 # The directory where files are collected for production (do not put your source files here)
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+
+USE_I18N = True
+USE_L10N = True
+USE_THOUSAND_SEPARATOR = True # Enables thousand separators
+LANGUAGE_CODE = 'vi'

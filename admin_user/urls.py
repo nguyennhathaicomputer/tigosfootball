@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
-from .views import admin_dashboard, create_product, inventory,get_product_detail,update_product
+from .views import admin_dashboard, create_product, inventory,get_product_detail, update_product
 
 app_name = 'admin_user'
 

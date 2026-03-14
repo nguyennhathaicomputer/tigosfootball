@@ -1,0 +1,83 @@
+{% comment %} {% extends 'base.html' %} {% endcomment %}
+{% load static %}
+
+{% include 'includes/header.html' %}
+ {% include 'includes/navbar.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
+
+<div class="product-detail-container">
+    <!-- Cột trái: Hình ảnh -->
+    <div class="product-images">
+        <div class="main-image">
+            <img id="mainImage" src="{{ images.first.image_url.url }}" alt="{{ shoe.name }}">
+        </div>
+        <div class="thumbnail-list">
+            {% for image in images %}
+            <div class="thumbnail-item" data-image-url="{{ image.image_url.url }}">
+                <img src="{{ image.image_url.url }}" alt="{{ shoe.name }}">
+            </div>
+            {% empty %}
+            <p>Không có ảnh</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Cột phải: Thông tin sản phẩm -->
+    <div class="product-info">
+        <h1 class="product-title">{{ shoe.name }}</h1>
+        <p class="product-brand">Thương hiệu: {{ shoe.brand.name }}</p>
+        <p class="product-color">Màu sắc: {{ shoe.color.name }}</p>
+        {% comment %} <p class="product-price" id="productPrice">{{ shoe.price|floatformat:0 }} đ</p> {% endcomment %}
+        <p class="product-price" id="productPrice">{{ price_format }} đ</p>
+
+
+        {% comment %} <div class="size-selection">
+            <h3>Chọn size:</h3>
+            <div class="size-options">
+                {% for size in sizes %}
+                <label class="size-checkbox">
+                    <input type="checkbox" name="size" value="{{ size.size }}" data-price="{{ shoe.price }}" {% if size.stock == 0 %}disabled{% endif %}>
+                    <span class="size-label">{{ size.size }}</span>
+                    <span class="size-stock"> Số lượng ({{ size.stock }})</span>
+                </label>
+                {% endfor %}
+            </div>
+        </div> {% endcomment %}
+
+        <div class="size-selection">
+    <h3>Chọn size và loại đế:</h3>
+    
+    {% regroup variants by size as size_list %}
+    {% for size_group in size_list %}
+        <div class="size-group">
+            <h4>Size {{ size_group.grouper.name }}</h4>
+            <div class="sole-options">
+                {% for variant in size_group.list %}
+                <label class="variant-checkbox {% if variant.stock == 0 %}disabled{% endif %}">
+                    <input type="checkbox" 
+                           name="variant" 
+                           value="{{ variant.id }}" 
+                           data-price="{{ shoe.price }}"
+                           {% if variant.stock == 0 %}disabled{% endif %}>
+                    <span class="sole-name">{{ variant.soleType.name }}</span>
+                    <span class="sole-stock"> Số Lượng({{ variant.stock }})</span>
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+    {% empty %}
+        <p>Không có biến thể nào cho sản phẩm này.</p>
+    {% endfor %}
+</div>
+
+        <div class="action-buttons">
+            <button class="btn-buy" id="buyNowBtn">Liên Hệ Người Bán</button>
+            {% comment %} <button class="btn-add-cart" id="addToCartBtn">Thêm vào giỏ</button> {% endcomment %}
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/product_detail.js' %}"></script>
+{% endblock %}

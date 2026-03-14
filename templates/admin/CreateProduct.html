@@ -4,6 +4,7 @@
 {% block content %}
 <!-- Link CSS riêng cho trang này -->
 <link rel="stylesheet" href="{% static 'css/CreateProduct.css' %}">
+{{ sole_types|json_script:"sole-types-data" }}
 
 <div class="create-product">
     <!-- Cột trái: Upload ảnh -->
@@ -25,16 +26,20 @@
             <input type="text" id="brand" name="brand" placeholder="Nhập hãng giày">
         </div>
         <div class="form-group">
+            <label for="name">Tên </label>
+            <input type="text" id="name" name="name" placeholder="Nhập tên giày">
+        </div>
+        {% comment %} <div class="form-group">
             <label for="sole">Kiểu đế</label>
             <input type="text" id="sole" name="sole" placeholder="Nhập kiểu đế">
-        </div>
+        </div> {% endcomment %}
         <div class="form-group">
             <label for="color">Màu sắc</label>
             <input type="text" id="color" name="color" placeholder="Nhập màu sắc">
         </div>
         
         <!-- Phần size và số lượng động -->
-        <div class="form-group">
+        {% comment %} <div class="form-group">
             <label>Size và Số lượng</label>
             <div id="size-quantity-container">
                 <!-- Cặp đầu tiên -->
@@ -46,7 +51,15 @@
                 </div>
             </div>
             <button type="button" id="add-pair" class="btn-add-pair">+ Thêm size</button>
-        </div>
+        </div> {% endcomment %}
+
+            <div class="form-group">
+                <label>Biến thể giày (Size, loại đế, số lượng)</label>
+                <div id="sizes-container">
+                    <!-- Các size-row sẽ được thêm bằng JS -->
+                </div>
+                <button type="button" id="add-size" class="btn-add-pair">+ Thêm size</button>
+            </div>
 
         <div class="form-group">
             <label for="price">Giá bán</label>
@@ -106,7 +119,7 @@
         reader.onerror = error => reject(error);
     });
 
-    // --- Phần quản lý cặp size–số lượng ---
+    {% comment %} // --- Phần quản lý cặp size–số lượng ---
     const container = document.getElementById('size-quantity-container');
     const addPairBtn = document.getElementById('add-pair');
 
@@ -160,6 +173,7 @@
         // Thu thập dữ liệu từ các trường cố định
         const formData = new FormData();
         formData.append('brand', document.getElementById('brand').value);
+        formData.append('name', document.getElementById('name').value);
         formData.append('sole', document.getElementById('sole').value);
         formData.append('color', document.getElementById('color').value);
         formData.append('price', document.getElementById('price').value);
@@ -201,6 +215,166 @@
             console.error('Error:', error);
             alert('Đã xảy ra lỗi khi gửi dữ liệu.');
         }
+    }); {% endcomment %}
+
+
+// --- Quản lý size và loại đế ---
+const sizesContainer = document.getElementById('sizes-container');
+const addSizeBtn = document.getElementById('add-size');
+
+// Hàm tạo một dòng loại đế (sole-row) cho một size cụ thể
+function createSoleRow(soleContainer) {
+    const soleRow = document.createElement('div');
+    soleRow.className = 'sole-row';
+
+    const soleInput = document.createElement('input');
+    soleInput.type = 'text';
+    soleInput.placeholder = 'Loại đế (VD: TF, IC, AG)';
+    soleInput.className = 'sole-input';
+    soleInput.required = true;
+
+    const quantityInput = document.createElement('input');
+    quantityInput.type = 'number';
+    quantityInput.placeholder = 'Số lượng';
+    quantityInput.className = 'quantity-input';
+    quantityInput.min = 1;
+    quantityInput.required = true;
+
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'remove-sole';
+    removeBtn.innerHTML = '&times;';
+    removeBtn.addEventListener('click', () => soleRow.remove());
+
+    soleRow.appendChild(soleInput);
+    soleRow.appendChild(quantityInput);
+    soleRow.appendChild(removeBtn);
+    return soleRow;
+}
+
+// Hàm tạo một size row (gồm input size, nút +, và container chứa các sole row)
+function createSizeRow() {
+    const sizeRow = document.createElement('div');
+    sizeRow.className = 'size-row';
+
+    // Dòng trên: size input và nút +
+    const sizeHeader = document.createElement('div');
+    sizeHeader.className = 'size-header';
+
+    const sizeInput = document.createElement('input');
+    sizeInput.type = 'text';
+    sizeInput.placeholder = 'Size (VD: 39, 40, 41)';
+    sizeInput.className = 'size-input';
+    sizeInput.required = true;
+
+    const addSoleBtn = document.createElement('button');
+    addSoleBtn.type = 'button';
+    addSoleBtn.className = 'add-sole-btn';
+    addSoleBtn.innerHTML = '+';
+    addSoleBtn.addEventListener('click', () => {
+        // Thêm một dòng loại đế vào soleContainer của size này
+        soleContainer.appendChild(createSoleRow(soleContainer));
     });
+
+    sizeHeader.appendChild(sizeInput);
+    sizeHeader.appendChild(addSoleBtn);
+
+    // Container chứa các dòng loại đế
+    const soleContainer = document.createElement('div');
+    soleContainer.className = 'sole-container';
+
+    // Mặc định thêm một dòng loại đế khi tạo size mới
+    soleContainer.appendChild(createSoleRow(soleContainer));
+
+    // Nút xóa size row
+    const removeSizeBtn = document.createElement('button');
+    removeSizeBtn.type = 'button';
+    removeSizeBtn.className = 'remove-size';
+    removeSizeBtn.innerHTML = 'Xóa size';
+    removeSizeBtn.addEventListener('click', () => sizeRow.remove());
+
+    sizeRow.appendChild(sizeHeader);
+    sizeRow.appendChild(soleContainer);
+    sizeRow.appendChild(removeSizeBtn);
+    return sizeRow;
+}
+
+// Khởi tạo một size mặc định khi tải trang
+document.addEventListener('DOMContentLoaded', () => {
+    sizesContainer.appendChild(createSizeRow());
+});
+
+// Thêm size mới khi click nút "Thêm size"
+addSizeBtn.addEventListener('click', () => {
+    sizesContainer.appendChild(createSizeRow());
+});
+
+// --- Xử lý submit form ---
+const submitBtn = document.querySelector('.btn-add');
+submitBtn.addEventListener('click', async function(e) {
+    e.preventDefault();
+
+    // Thu thập các trường cố định
+    const formData = new FormData();
+    formData.append('brand', document.getElementById('brand').value);
+    formData.append('name', document.getElementById('name').value);
+    // formData.append('sole', document.getElementById('sole').value); // Không còn trường sole riêng
+    formData.append('color', document.getElementById('color').value);
+    formData.append('price', document.getElementById('price').value);
+    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+    // Thu thập dữ liệu size và loại đế
+    const sizeRows = document.querySelectorAll('.size-row');
+    const variants = [];
+
+    sizeRows.forEach(sizeRow => {
+        const sizeInput = sizeRow.querySelector('.size-input');
+        const size = sizeInput.value.trim();
+        if (!size) return; // Bỏ qua nếu size trống
+
+        const soleRows = sizeRow.querySelectorAll('.sole-row');
+        soleRows.forEach(soleRow => {
+            const soleInput = soleRow.querySelector('.sole-input');
+            const quantityInput = soleRow.querySelector('.quantity-input');
+            const soleName = soleInput.value.trim();
+            const quantity = quantityInput.value.trim();
+            if (soleName && quantity) {
+                variants.push({
+                    size: size,
+                    sole_name: soleName,
+                    quantity: parseInt(quantity)
+                });
+            }
+        });
+    });
+
+    if (variants.length === 0) {
+        alert('Vui lòng nhập ít nhất một biến thể (size + loại đế).');
+        return;
+    }
+
+    formData.append('variants', JSON.stringify(variants));
+
+    // Thêm ảnh
+    selectedFiles.forEach(file => formData.append('images', file));
+
+    // Gửi request
+    try {
+        const response = await fetch("{% url 'admin_user:create_product' %}", {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+        if (data.status === 'ok') {
+            alert('Thêm sản phẩm thành công!');
+            window.location.reload();
+        } else {
+            alert('Có lỗi: ' + data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Đã xảy ra lỗi khi gửi dữ liệu.');
+    }
+});
 </script>
 {% endblock %}

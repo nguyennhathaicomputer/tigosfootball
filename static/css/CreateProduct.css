@@ -208,3 +208,311 @@
     }
 }
 
+
+
+.variant-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.variant-row input,
+.variant-row select {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.remove-pair {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    color: #ff4444;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 5px;
+    transition: color 0.2s;
+}
+
+.remove-pair:hover {
+    color: #cc0000;
+}
+
+.btn-add-pair {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 5px;
+    transition: background-color 0.2s;
+}
+
+.btn-add-pair:hover {
+    background-color: #218838;
+}
+
+
+
+/* Size row */
+.size-row {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: #fafafa;
+}
+
+.size-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.size-header .size-input {
+    flex: 1;
+}
+
+.add-sole-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.add-sole-btn:hover {
+    background-color: #0056b3;
+}
+
+.sole-container {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.sole-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.sole-row .sole-input {
+    flex: 2;
+}
+
+.sole-row .quantity-input {
+    flex: 1;
+}
+
+.remove-sole {
+    background: none;
+    border: none;
+    color: #ff4444;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+.remove-sole:hover {
+    color: #cc0000;
+}
+
+.remove-size {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.remove-size:hover {
+    background-color: #c82333;
+}
+
+.btn-add-pair {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.btn-add-pair:hover {
+    background-color: #218838;
+}
+
+
+
+/* Size row - khung bao quanh mỗi size */
+.size-row {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Phần header chứa input size và nút + */
+.size-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+}
+
+.size-header .size-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Nút + để thêm loại đế */
+.add-sole-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+}
+
+.add-sole-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Container chứa các dòng loại đế (thụt vào) */
+.sole-container {
+    margin-left: 20px;  /* Tạo khoảng lề để thấy rõ là phần con */
+    padding-left: 10px;
+    border-left: 2px dashed #ccc; /* Đường kẻ dọc tùy chọn để dễ nhìn */
+}
+
+/* Mỗi dòng loại đế + số lượng */
+.sole-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #eaeaea;
+}
+
+/* Input loại đế chiếm không gian lớn hơn */
+.sole-row .sole-input {
+    flex: 2;  /* Chiếm 2 phần */
+    min-width: 120px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Input số lượng chiếm 1 phần, ngắn hơn */
+.sole-row .quantity-input {
+    flex: 1;
+    min-width: 80px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Nút xóa một dòng loại đế (dấu ×) */
+.remove-sole {
+    background: none;
+    border: none;
+    color: #ff4444;
+    font-size: 1.6rem;
+    cursor: pointer;
+    padding: 0 8px;
+    line-height: 1;
+    transition: color 0.2s;
+    flex-shrink: 0;
+}
+
+.remove-sole:hover {
+    color: #cc0000;
+}
+
+/* Nút xóa toàn bộ size */
+.remove-size {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 15px;
+    width: 100%;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+.remove-size:hover {
+    background-color: #c82333;
+}
+
+/* Nút thêm size (bên dưới cùng) */
+.btn-add-pair {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.btn-add-pair:hover {
+    background-color: #218838;
+}
+
+/* Điều chỉnh khoảng cách chung */
+.form-group {
+    margin-bottom: 25px;
+}
