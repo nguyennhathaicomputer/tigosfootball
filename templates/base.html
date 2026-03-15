@@ -51,5 +51,109 @@
 
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/filter.js' %}"></script>
+
+      <script>  (function() {
+        // Lấy các checkbox và product cards
+        const soleCheckboxes = document.querySelectorAll('.filter-sole input[type="checkbox"]');
+        const sizeCheckboxes = document.querySelectorAll('.filter-size input[type="checkbox"]');
+        const priceCheckboxes = document.querySelectorAll('.filter-price input[type="checkbox"]');
+        const allCheckboxes = [...soleCheckboxes, ...sizeCheckboxes, ...priceCheckboxes];
+        const productCards = Array.from(document.querySelectorAll('.product-card'));
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        // Biến lưu brand đang được lọc (null = không lọc brand)
+        let selectedBrand = null;
+
+        // Hàm áp dụng lọc brand lên trên kết quả hiện tại của filter.js
+        function applyBrandFilter() {
+            productCards.forEach(card => {
+                const brand = card.dataset.brand; // Giá trị brand của sản phẩm
+                // Nếu đang lọc brand và sản phẩm không đúng brand => ẩn
+                if (selectedBrand && brand !== selectedBrand) {
+                    card.style.display = 'none';
+                }
+                // Ngược lại, giữ nguyên trạng thái hiển thị do filter.js đã xử lý
+                // (không can thiệp)
+            });
+        }
+
+        // Hàm reset tất cả checkbox (bỏ chọn)
+        function resetAllCheckboxes() {
+            allCheckboxes.forEach(cb => cb.checked = false);
+        }
+
+     // Hàm cập nhật class active trên navbar
+        // function updateNavbarActive() {
+         //   document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+          //  if (selectedBrand) {
+           //     navLinks.forEach(link => {
+           //         const linkBrand = link.dataset.brand || link.textContent.trim();
+           //         if (linkBrand === selectedBrand) {
+            //            link.closest('.nav-item').classList.add('active');
+            //        }
+             //   });
+          //  }
+       // } 
+
+       function updateNavbarActive() {
+    console.log('Updating active, selectedBrand =', selectedBrand);
+    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+    if (selectedBrand) {
+        navLinks.forEach(link => {
+            const linkBrand = link.dataset.brand || link.textContent.trim();
+            console.log('Comparing', linkBrand, 'with', selectedBrand);
+            if (linkBrand === selectedBrand) {
+                link.closest('.nav-item').classList.add('active');
+                console.log('Added active to', linkBrand);
+            }
+        });
+    }
+}
+
+        // --- Xử lý click trên navbar ---
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const brandName = this.dataset.brand || this.textContent.trim();
+                console.log('Clicked brand:', brandName); // thêm log
+
+                if (selectedBrand === brandName) {
+                    // Nếu đang active brand này => bỏ lọc brand
+                    selectedBrand = null;
+                    // Không reset checkbox, giữ nguyên các lựa chọn hiện tại
+                } else {
+                    // Chọn brand mới
+                    selectedBrand = brandName;
+                    // *** Tùy chọn: reset tất cả checkbox để chỉ lọc theo brand ***
+                    resetAllCheckboxes(); // Bỏ dòng này nếu muốn kết hợp với filter cũ
+                }
+
+                // Kích hoạt sự kiện change trên các checkbox để filter.js chạy
+                // (nếu có reset checkbox, sự kiện change sẽ được kích hoạt, filter.js sẽ cập nhật)
+                allCheckboxes.forEach(cb => {
+                    cb.dispatchEvent(new Event('change', { bubbles: true }));
+                });
+
+                // Cập nhật active class
+                updateNavbarActive();
+
+                // Áp dụng lọc brand sau khi filter.js đã chạy (dùng setTimeout)
+                setTimeout(applyBrandFilter, 0);
+            });
+        });
+
+        // --- Lắng nghe sự kiện change từ checkbox để áp dụng lại brand filter ---
+        allCheckboxes.forEach(cb => {
+            cb.addEventListener('change', function() {
+                // Đợi filter.js chạy xong rồi mới áp dụng brand
+                setTimeout(applyBrandFilter, 0);
+            });
+        });
+
+        // --- Khởi tạo ban đầu ---
+        selectedBrand = null;
+        updateNavbarActive();
+    })();
+</script>  
 </body>
 </html>

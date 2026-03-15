@@ -153,3 +153,8 @@ body {
         transform: rotate(180deg);
     }
 }
+
+.nav-item.active > .nav-link {
+    background-color: #fff;
+    color: #000;
+}

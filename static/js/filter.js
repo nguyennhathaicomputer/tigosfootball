@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Lấy tất cả các checkbox filter
-    const brandCheckboxes = document.querySelectorAll('.filter-sole input[type="checkbox"]');
+    const soleCheckboxes = document.querySelectorAll('.filter-sole input[type="checkbox"]');
     const sizeCheckboxes = document.querySelectorAll('.filter-size input[type="checkbox"]');
     const priceCheckboxes = document.querySelectorAll('.filter-price input[type="checkbox"]');
     const productGrid = document.getElementById('productGrid');
@@ -31,9 +31,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const sizes = card.dataset.sizes.split(','); // mảng các size dạng string
 
         // Lọc brand
-        const selectedBrands = getCheckedValues(brandCheckboxes);
-        if (selectedBrands.length > 0) {
-            const hasSole = brand.some(s => selectedBrands.includes(s));
+        const selectedSoles = getCheckedValues(soleCheckboxes);
+        if (selectedSoles.length > 0) {
+            const hasSole = brand.some(s => selectedSoles.includes(s));
             if (!hasSole) return false;
         }
 
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Gắn sự kiện change cho tất cả checkbox
-    [...brandCheckboxes, ...sizeCheckboxes, ...priceCheckboxes].forEach(cb => {
+    [...soleCheckboxes, ...sizeCheckboxes, ...priceCheckboxes].forEach(cb => {
         cb.addEventListener('change', updateFilter);
     });
 
